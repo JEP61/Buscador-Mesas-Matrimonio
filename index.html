@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Buscador de Mesas</title>
 
   <style>
@@ -16,303 +16,321 @@
       padding: 18px;
       box-sizing: border-box;
 
-      /* Fondo */
       background-image: url("fondo.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }
 
-    /* Capa de blur y oscurecimiento suave */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 0;
-    }
-
     .card {
       position: relative;
-      z-index: 1;
-
       width: 100%;
-      max-width: 680px;
-      background: rgba(255, 255, 255, 0.88);
+      max-width: 720px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius: 22px;
-      padding: 26px 22px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.20);
-      text-align: center;
+      padding: 28px;
+      box-shadow: 0px 10px 35px rgba(0,0,0,0.25);
     }
 
     h1 {
       margin: 0;
-      font-size: 32px;
+      font-size: 42px;
+      text-align: center;
       color: #133d66;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 0.5px;
     }
 
     .subtitle {
       margin-top: 12px;
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 24px;
+      text-align: center;
       color: #222;
+      font-weight: 800;
     }
 
-    .hint {
+    .example {
       margin-top: 8px;
-      margin-bottom: 18px;
-      font-size: 18px;
+      font-size: 20px;
+      text-align: center;
       color: #444;
+      font-weight: 600;
     }
 
     input {
       width: 100%;
-      padding: 16px;
-      font-size: 20px;
+      padding: 18px;
+      font-size: 24px;
       border-radius: 14px;
       border: 1px solid #ccc;
       outline: none;
-      margin-bottom: 18px;
+      margin-top: 20px;
       box-sizing: border-box;
-    }
-
-    input:focus {
-      border-color: #2f6fed;
-      box-shadow: 0 0 0 4px rgba(47,111,237,0.18);
+      font-weight: 700;
     }
 
     .buttons {
       display: flex;
       gap: 14px;
-      justify-content: center;
+      margin-top: 18px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
+      justify-content: center;
     }
 
     button {
       flex: 1;
-      min-width: 210px;
+      min-width: 220px;
       padding: 16px;
       border: none;
       border-radius: 14px;
-      font-size: 18px;
-      font-weight: 800;
+      font-size: 20px;
+      font-weight: 900;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
     }
 
     .btn-nombre {
-      background: #1f5bd6;
+      background: #0b4c9c;
       color: white;
     }
 
     .btn-nombre:hover {
-      background: #1748ab;
+      background: #083b78;
     }
 
     .btn-mesa {
-      background: #ffb703;
-      color: #1d1d1d;
+      background: #f0b400;
+      color: #222;
     }
 
     .btn-mesa:hover {
       background: #e6a600;
     }
 
-    .resultado {
-      text-align: left;
+    .status {
       margin-top: 18px;
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.90);
-      max-height: 380px;
-      overflow-y: auto;
-      font-size: 20px;
-      line-height: 1.7;
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-
-    .linea {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 6px;
-      border-bottom: 1px solid rgba(0,0,0,0.12);
-    }
-
-    .linea:last-child {
-      border-bottom: none;
-    }
-
-    .nombre-text {
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
       color: #1a1a1a;
     }
 
-    .mesa-tag {
+    .resultados {
+      margin-top: 22px;
+      max-height: 440px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .fila {
+      padding: 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+      font-size: 22px;
+      font-weight: 800;
+      color: #111;
+    }
+
+    .mesa-header {
+      margin-top: 18px;
+      margin-bottom: 18px;
+      text-align: center;
+      font-size: 32px;
       font-weight: 900;
-      background: #133d66;
-      color: white;
-      padding: 7px 12px;
-      border-radius: 14px;
-      font-size: 18px;
-      white-space: nowrap;
+      color: #133d66;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.65);
+      border: 2px solid rgba(19,61,102,0.2);
     }
 
     .contador {
-      margin-top: 14px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #333;
-      text-align: center;
-    }
-
-    .footer {
       margin-top: 18px;
-      font-size: 14px;
-      color: #444;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #133d66;
     }
 
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 28px;
-      }
-      .subtitle {
-        font-size: 18px;
-      }
-      .hint {
-        font-size: 16px;
-      }
-      input {
-        font-size: 18px;
-      }
-      button {
-        font-size: 16px;
-      }
-      .resultado {
-        font-size: 18px;
-      }
+    .hint {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 16px;
+      color: #111;
+      font-weight: 700;
+    }
+
+    @media (max-width: 520px) {
+      h1 { font-size: 34px; }
+      .subtitle { font-size: 20px; }
+      .example { font-size: 18px; }
+      input { font-size: 20px; }
+      button { font-size: 18px; min-width: 160px; }
+      .fila { font-size: 19px; }
+      .mesa-header { font-size: 26px; }
     }
   </style>
 </head>
 
 <body>
-
-  <div class="overlay"></div>
-
   <div class="card">
     <h1>🌿 Buscador de Mesas</h1>
 
-    <div class="subtitle">
-      Ingresa tu apellido o tu número de mesa
-    </div>
+    <div class="subtitle">Ingresa tu apellido o tu número de mesa</div>
+    <div class="example">Ejemplo: González o 12</div>
 
-    <div class="hint">
-      Ejemplo: <b>González</b> o <b>12</b>
-    </div>
-
-    <input type="text" id="busqueda" placeholder="Escribe aquí...">
+    <input id="busqueda" type="text"
+      placeholder="Escribe aquí..."
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+    />
 
     <div class="buttons">
       <button class="btn-nombre" onclick="buscarPorNombre()">🔍 Buscar por Nombre</button>
       <button class="btn-mesa" onclick="buscarPorMesa()">🪑 Buscar por Mesa</button>
     </div>
 
-    <div id="resultado" class="resultado">
-      Cargando invitados...
-    </div>
+    <div class="status" id="status">Cargando invitados...</div>
 
-    <div id="contador" class="contador"></div>
+    <div id="mesaHeader"></div>
+    <div class="resultados" id="resultados"></div>
+    <div class="contador" id="contador"></div>
 
-    <div class="footer">
-      Si no encuentras tu nombre, prueba con tu primer apellido 😊
-    </div>
+    <div class="hint">Si no encuentras tu nombre, prueba con tu primer apellido 😊</div>
   </div>
 
   <script>
-    let datos = [];
+    let invitados = [];
 
-    fetch('invitados.csv')
-      .then(response => response.text())
-      .then(text => {
+    function limpiarTexto(texto) {
+      return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+    }
 
-        const lineas = text.split(/\r?\n/);
+    async function cargarCSV() {
+      try {
+        const response = await fetch("invitados.csv");
+        const data = await response.text();
 
-        lineas.slice(1).forEach(linea => {
-          if (!linea.trim()) return;
+        const lineas = data.split("\n").filter(l => l.trim() !== "");
 
-          const partes = linea.split(',');
-          const num = (partes[0] || '').trim();
-          const nombre = (partes[1] || '').trim();
-          const mesa = (partes[2] || '').trim();
+        invitados = lineas.slice(1).map(linea => {
+          const partes = linea.split(",");
 
-          if (num && nombre && mesa) {
-            datos.push({ num, nombre, mesa });
-          }
+          return {
+            num: partes[0]?.trim(),
+            nombre: partes[1]?.trim(),
+            mesa: partes[2]?.trim()
+          };
         });
 
-        document.getElementById("resultado").innerHTML =
+        document.getElementById("status").innerText =
           "✅ Listo. Ahora puedes buscar por apellido o por número de mesa.";
 
-        document.getElementById("contador").innerHTML =
-          `Invitados cargados: ${datos.length}`;
+        document.getElementById("contador").innerText =
+          "Invitados cargados: " + invitados.length;
 
+      } catch (error) {
+        document.getElementById("status").innerText =
+          "❌ Error cargando invitados.csv. Revisa que el archivo exista y esté bien subido.";
+      }
+    }
+
+    function limpiarPantalla() {
+      document.getElementById("resultados").innerHTML = "";
+      document.getElementById("mesaHeader").innerHTML = "";
+      document.getElementById("contador").innerText = "";
+    }
+
+    function mostrarResultadosNombre(lista) {
+      const contenedor = document.getElementById("resultados");
+      contenedor.innerHTML = "";
+
+      lista.forEach(inv => {
+        const fila = document.createElement("div");
+        fila.className = "fila";
+        fila.innerText = inv.nombre + " — Mesa " + inv.mesa;
+        contenedor.appendChild(fila);
       });
 
-    function mostrarResultado(resultado) {
-      const div = document.getElementById('resultado');
-      const contador = document.getElementById('contador');
+      document.getElementById("contador").innerText =
+        "Resultados encontrados: " + lista.length;
+    }
 
-      if (resultado.length) {
-        div.innerHTML = resultado.map(inv =>
-          `<div class="linea">
-              <div class="nombre-text">${inv.nombre}</div>
-              <div class="mesa-tag">Mesa ${inv.mesa}</div>
-           </div>`
-        ).join('');
+    function mostrarResultadosMesa(lista, mesa) {
+      const contenedor = document.getElementById("resultados");
+      contenedor.innerHTML = "";
 
-        contador.innerHTML = `Resultados encontrados: ${resultado.length}`;
-      } else {
-        div.innerHTML = "❌ No se encontraron resultados.";
-        contador.innerHTML = "";
-      }
+      const header = document.getElementById("mesaHeader");
+      header.innerHTML = `<div class="mesa-header">🪑 MESA ${mesa}</div>`;
+
+      lista.forEach(inv => {
+        const fila = document.createElement("div");
+        fila.className = "fila";
+        fila.innerText = inv.nombre;
+        contenedor.appendChild(fila);
+      });
+
+      document.getElementById("contador").innerText =
+        "Invitados en esta mesa: " + lista.length;
     }
 
     function buscarPorNombre() {
-      const query = document.getElementById('busqueda').value.toLowerCase().trim();
+      limpiarPantalla();
 
-      if (!query) {
-        document.getElementById("resultado").innerHTML = "⚠️ Escribe un apellido o nombre.";
+      const texto = limpiarTexto(document.getElementById("busqueda").value);
+
+      if (!texto) {
+        alert("Por favor ingresa un apellido o nombre.");
         return;
       }
 
-      const resultado = datos.filter(inv =>
-        inv.nombre.toLowerCase().includes(query)
-      );
+      const resultados = invitados.filter(inv => {
+        const palabras = limpiarTexto(inv.nombre).split(/\s+/);
+        return palabras.includes(texto);
+      });
 
-      mostrarResultado(resultado);
+      if (resultados.length === 0) {
+        document.getElementById("resultados").innerHTML =
+          "<div class='status'>❌ No se encontraron resultados.</div>";
+        return;
+      }
+
+      mostrarResultadosNombre(resultados);
     }
 
     function buscarPorMesa() {
-      const query = parseInt(document.getElementById('busqueda').value.trim());
+      limpiarPantalla();
 
-      if (isNaN(query)) {
-        document.getElementById("resultado").innerHTML = "⚠️ Escribe un número de mesa (ej: 12).";
+      const texto = limpiarTexto(document.getElementById("busqueda").value);
+
+      if (!texto) {
+        alert("Por favor ingresa un número de mesa.");
         return;
       }
 
-      const resultado = datos.filter(inv =>
-        parseInt(inv.mesa) === query
-      );
+      const resultados = invitados.filter(inv => limpiarTexto(inv.mesa) === texto);
 
-      mostrarResultado(resultado);
+      if (resultados.length === 0) {
+        document.getElementById("resultados").innerHTML =
+          "<div class='status'>❌ No se encontraron resultados para esa mesa.</div>";
+        return;
+      }
+
+      mostrarResultadosMesa(resultados, texto);
     }
-  </script>
 
+    cargarCSV();
+  </script>
 </body>
-</html>
 </html>
