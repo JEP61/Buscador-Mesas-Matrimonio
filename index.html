@@ -17,10 +17,18 @@
         fetch('invitados.csv')
             .then(response => response.text())
             .then(text => {
-                const lineas = text.split('\n');
-                lineas.forEach(linea => {
-                    const [num, nombre, mesa] = linea.split(',');
+                const lineas = text.split(/\r?\n/);
+                lineas.slice(1).forEach(linea => { // salta encabezado
+                  if (!linea.trim()) return;       // salta líneas vacías
+                
+                  const partes = linea.split(',');
+                  const num = (partes[0] || '').trim();
+                  const nombre = (partes[1] || '').trim();
+                  const mesa = (partes[2] || '').trim();
+                
+                  if (num && nombre && mesa) {
                     datos.push({ num, nombre, mesa });
+                  }
                 });
             });
 
