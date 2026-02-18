@@ -9,273 +9,328 @@
    body {
      margin: 0;
      font-family: Arial, sans-serif;
+
      min-height: 100vh;
+     height: 100svh; /* para iPhone Safari moderno */
      display: flex;
      justify-content: center;
      align-items: center;
-     padding: 18px;
+
+     padding: 14px;
      box-sizing: border-box;
 
-     /* Fondo */
      background-image: url("fondo.jpg");
      background-size: cover;
      background-position: center;
      background-repeat: no-repeat;
+     overflow: hidden;
    }
 
-   /* Capa oscura suave para que el texto siempre se lea */
-   body::before {
-     content: "";
+   .overlay {
      position: fixed;
-     inset: 0;
-     background: rgba(0,0,0,0.25);
+     top: 0; left: 0;
+     width: 100%;
+     height: 100%;
+     background: rgba(0,0,0,0.28);
      z-index: 0;
    }
 
    .card {
      position: relative;
      z-index: 1;
+
      width: 100%;
-     max-width: 680px;
-     background: rgba(255,255,255,0.85);
+     max-width: 560px;
+
+     background: rgba(255,255,255,0.82);
      backdrop-filter: blur(10px);
      -webkit-backdrop-filter: blur(10px);
+
      border-radius: 22px;
-     padding: 26px 22px;
-     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-     border: 2px solid rgba(255,255,255,0.6);
+     padding: 22px;
+
+     box-shadow: 0 10px 26px rgba(0,0,0,0.28);
+     text-align: center;
+
+     max-height: calc(100svh - 28px);
+     overflow-y: auto;
    }
 
    h1 {
-     margin: 0 0 12px 0;
+     margin: 0;
      font-size: 34px;
+     color: #133d66;
      font-weight: 900;
-     text-align: center;
-     color: #0b2e59;
      letter-spacing: 0.5px;
    }
 
-   .subtitle {
-     text-align: center;
+   .subtitulo {
+     margin-top: 10px;
      font-size: 18px;
      font-weight: 700;
-     margin-bottom: 8px;
-     color: #222;
+     color: #333;
    }
 
-   .example {
-     text-align: center;
+   .ejemplo {
      font-size: 16px;
-     margin-bottom: 18px;
+     margin-top: 6px;
      color: #444;
+     font-weight: 600;
+   }
+
+   .novios {
+     margin-top: 12px;
+     font-size: 18px;
+     font-weight: 900;
+     color: #0d4a9c;
    }
 
    input {
      width: 100%;
-     padding: 18px;
      font-size: 22px;
-     border-radius: 16px;
-     border: 2px solid #cfcfcf;
-     outline: none;
+     padding: 16px;
+     border-radius: 14px;
+     border: 2px solid rgba(0,0,0,0.12);
+     margin-top: 16px;
      box-sizing: border-box;
-     margin-bottom: 18px;
+     outline: none;
      font-weight: 800;
+     text-align: center;
+     background: rgba(255,255,255,0.95);
    }
 
    .buttons {
      display: flex;
      gap: 14px;
+     margin-top: 16px;
      justify-content: center;
      flex-wrap: wrap;
-     margin-bottom: 18px;
    }
 
    button {
      flex: 1;
-     min-width: 220px;
+     min-width: 230px;
      padding: 16px;
-     font-size: 18px;
-     border-radius: 16px;
-     border: none;
-     cursor: pointer;
+     font-size: 20px;
      font-weight: 900;
-     transition: 0.2s ease;
-     box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+     border: none;
+     border-radius: 16px;
+     cursor: pointer;
+     transition: 0.2s;
+     box-shadow: 0 6px 14px rgba(0,0,0,0.18);
    }
 
    .btn-nombre {
-     background: #0b4aa1;
+     background: linear-gradient(180deg, #0d4a9c, #0b3e83);
      color: white;
    }
 
    .btn-nombre:hover {
-     background: #083a7d;
+     transform: scale(1.02);
    }
 
    .btn-mesa {
-     background: #e6a600;
-     color: #222;
+     background: linear-gradient(180deg, #f4b400, #e6a600);
+     color: #1d1d1d;
    }
 
    .btn-mesa:hover {
-     background: #c98f00;
-   }
-
-   .msg {
-     margin-top: 10px;
-     font-size: 16px;
-     font-weight: 700;
-     color: #1a1a1a;
-     text-align: center;
-   }
-
-   /* RESULTADOS */
-   #resultado {
-     margin-top: 18px;
-   }
-
-   .mesa-header {
-     background: rgba(11, 74, 161, 0.15);
-     border: 2px solid rgba(11, 74, 161, 0.25);
-     padding: 14px;
-     border-radius: 18px;
-     font-size: 28px;
-     font-weight: 900;
-     text-align: center;
-     color: #0b2e59;
-     margin-bottom: 18px;
-     box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
-   }
-
-   .result-item {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     gap: 14px;
-     padding: 16px 14px;
-     margin-bottom: 12px;
-     border-radius: 18px;
-
-     /* Fondo tipo tarjeta */
-     background: rgba(255,255,255,0.95);
-     border: 2px solid rgba(0,0,0,0.08);
-     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-   }
-
-   .result-name {
-     font-size: 20px;
-     font-weight: 900;
-     color: #0b2e59;
-     line-height: 1.25;
-   }
-
-   .mesa-badge {
-     background: #0b4aa1;
-     color: white;
-     font-size: 16px;
-     font-weight: 900;
-     padding: 10px 14px;
-     border-radius: 14px;
-     white-space: nowrap;
-     box-shadow: 0 5px 10px rgba(0,0,0,0.15);
-   }
-
-   .count {
-     margin-top: 16px;
-     font-size: 18px;
-     font-weight: 900;
-     text-align: center;
-     color: #0b2e59;
+     transform: scale(1.02);
    }
 
    .hint {
-     margin-top: 10px;
-     font-size: 15px;
-     text-align: center;
-     color: #333;
-     font-weight: 700;
-   }
-
-   footer {
      margin-top: 14px;
-     text-align: center;
-     font-size: 14px;
-     color: #222;
+     font-size: 16px;
      font-weight: 700;
-     opacity: 0.9;
+     color: #111;
+     background: rgba(255,255,255,0.65);
+     padding: 12px;
+     border-radius: 14px;
+     border: 1px solid rgba(0,0,0,0.15);
+     line-height: 1.4;
    }
 
-   @media (max-width: 520px) {
-     h1 { font-size: 28px; }
+   .resultado {
+     margin-top: 16px;
+     text-align: left;
+     font-size: 20px;
+     font-weight: 800;
+     color: #111;
+
+     background: rgba(255,255,255,0.78);
+     padding: 14px;
+     border-radius: 18px;
+     border: 1px solid rgba(0,0,0,0.12);
+
+     max-height: 320px;
+     overflow-y: auto;
+   }
+
+   .persona {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     gap: 10px;
+
+     padding: 12px 10px;
+     border-bottom: 1px solid rgba(0,0,0,0.12);
+     font-size: 20px;
+     font-weight: 900;
+
+     background: rgba(13,74,156,0.08);
+     border-radius: 12px;
+     margin-bottom: 10px;
+   }
+
+   .persona:last-child {
+     border-bottom: none;
+     margin-bottom: 0;
+   }
+
+   .mesaTag {
+     background: linear-gradient(180deg, #133d66, #0b2c4f);
+     color: white;
+     padding: 8px 14px;
+     border-radius: 14px;
+     font-size: 16px;
+     font-weight: 900;
+     white-space: nowrap;
+     box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+   }
+
+   .mesaTitulo {
+     background: rgba(255,255,255,0.9);
+     border: 2px solid rgba(19,61,102,0.25);
+     border-radius: 18px;
+     padding: 12px;
+     font-size: 24px;
+     font-weight: 900;
+     text-align: center;
+     margin-bottom: 14px;
+     color: #133d66;
+   }
+
+   .footer {
+     margin-top: 12px;
+     font-size: 16px;
+     font-weight: 800;
+     color: #222;
+     text-align: center;
+     line-height: 1.5;
+   }
+
+   @media (max-width: 500px) {
+     h1 { font-size: 30px; }
+     .subtitulo { font-size: 17px; }
+     .novios { font-size: 17px; }
      input { font-size: 20px; }
-     .result-name { font-size: 18px; }
-     .mesa-badge { font-size: 15px; padding: 9px 12px; }
+     button { font-size: 18px; }
+     .persona { font-size: 18px; }
+     .mesaTag { font-size: 15px; }
    }
  </style>
 </head>
 
 <body>
+ <div class="overlay"></div>
+
  <div class="card">
    <h1>🌿 Buscador de Mesas</h1>
-   <div class="subtitle">Ingresa tu apellido o tu número de mesa</div>
-   <div class="example">Ejemplo: <b>González</b> o <b>12</b></div>
 
-   <input type="text" id="busqueda" placeholder="Escribe aquí..." autocomplete="off">
+   <div class="subtitulo">Ingresa tu apellido o tu número de mesa</div>
+   <div class="ejemplo">Ejemplo: González o 12</div>
+
+   <div class="novios">Florencia Pino & Tomás Godoy 💙</div>
+
+   <input id="busqueda" type="text" placeholder="Escribe aquí..." autocomplete="off">
 
    <div class="buttons">
      <button class="btn-nombre" onclick="buscarPorApellido()">🔍 Buscar por Nombre</button>
      <button class="btn-mesa" onclick="buscarPorMesa()">🪑 Buscar por Mesa</button>
    </div>
 
-   <div class="msg" id="estado">⏳ Cargando invitados...</div>
+   <div class="hint" id="estado">
+     ⏳ Cargando invitados...
+   </div>
 
-   <div id="resultado"></div>
-
-   <div class="hint">Si no encuentras tu nombre, prueba con tu primer apellido 😊</div>
-
-   <footer>Flo & Tomás 💙</footer>
+   <div class="resultado" id="resultado" style="display:none;"></div>
+   <div class="footer" id="contador"></div>
  </div>
 
  <script>
    let datos = [];
 
+   function normalizarTexto(texto) {
+     return texto
+       .toLowerCase()
+       .normalize("NFD")
+       .replace(/[\u0300-\u036f]/g, "");
+   }
+
    fetch("invitados.csv")
      .then(response => response.text())
-     .then(text => {
-       const lineas = text.trim().split("\n");
+     .then(texto => {
+       const lineas = texto.trim().split("\n");
 
-       lineas.forEach((linea, index) => {
-         if(index === 0) return; // salta encabezado
-
-         const partes = linea.split(",");
-
-         if(partes.length < 3) return;
-
-         const num = partes[0].trim();
-         const nombre = partes[1].trim();
-         const mesa = partes[2].trim();
-
-         datos.push({ num, nombre, mesa });
-       });
+       for (let i = 1; i < lineas.length; i++) {
+         const partes = lineas[i].split(",");
+         if (partes.length >= 3) {
+           const num = partes[0].trim();
+           const nombre = partes[1].trim();
+           const mesa = partes[2].trim();
+           datos.push({ num, nombre, mesa });
+         }
+       }
 
        document.getElementById("estado").innerHTML =
-         "✅ Listo. Ahora puedes buscar por apellido o por número de mesa.";
+         "✅ Listo. Ahora puedes buscar por apellido o por número de mesa.<br><b>Invitados cargados:</b> " + datos.length;
      })
-     .catch(err => {
-       document.getElementById("estado").innerHTML =
-         "❌ Error cargando invitados.csv. Revisa que esté en el repositorio.";
+     .catch(error => {
+       document.getElementById("estado").innerText = "❌ Error cargando invitados.csv";
+       console.error(error);
      });
 
-   function buscarPorApellido() {
-     const query = document.getElementById("busqueda").value.trim().toLowerCase();
+   function limpiarResultado() {
+     document.getElementById("resultado").innerHTML = "";
+     document.getElementById("contador").innerHTML = "";
+   }
 
-     if(query.length === 0) {
-       mostrarMensaje("⚠️ Escribe un apellido primero.");
+   function mostrarResultado(lista, mesaBuscada = null) {
+     const div = document.getElementById("resultado");
+     div.style.display = "block";
+     limpiarResultado();
+
+     if (lista.length === 0) {
+       div.innerHTML = "❌ No se encontraron resultados.";
        return;
      }
 
+     if (mesaBuscada !== null) {
+       div.innerHTML += `<div class="mesaTitulo">🪑 MESA ${mesaBuscada}</div>`;
+     }
+
+     lista.forEach(persona => {
+       div.innerHTML += `
+         <div class="persona">
+           <span>${persona.nombre}</span>
+           <span class="mesaTag">Mesa ${persona.mesa}</span>
+         </div>
+       `;
+     });
+
+     document.getElementById("contador").innerHTML =
+       `<b>Resultados encontrados:</b> ${lista.length}<br>
+       Si no encuentras tu nombre, prueba con tu primer apellido 😊`;
+   }
+
+   function buscarPorApellido() {
+     const queryOriginal = document.getElementById("busqueda").value.trim();
+     if (queryOriginal.length === 0) return;
+
+     const query = normalizarTexto(queryOriginal);
+
      const resultado = datos.filter(inv => {
-       const palabras = inv.nombre.toLowerCase().split(" ");
+       const palabras = normalizarTexto(inv.nombre).split(" ");
        return palabras.includes(query);
      });
 
@@ -284,45 +339,11 @@
 
    function buscarPorMesa() {
      const query = document.getElementById("busqueda").value.trim();
-
-     if(query.length === 0) {
-       mostrarMensaje("⚠️ Escribe un número de mesa primero.");
-       return;
-     }
+     if (query.length === 0) return;
 
      const resultado = datos.filter(inv => inv.mesa === query);
 
      mostrarResultado(resultado, query);
-   }
-
-   function mostrarMensaje(msg) {
-     document.getElementById("resultado").innerHTML =
-       `<div class="count">${msg}</div>`;
-   }
-
-   function mostrarResultado(resultado, mesaBuscada) {
-     const div = document.getElementById("resultado");
-     div.innerHTML = "";
-
-     if(resultado.length === 0) {
-       div.innerHTML = `<div class="count">No se encontraron resultados.</div>`;
-       return;
-     }
-
-     if(mesaBuscada !== null) {
-       div.innerHTML += `<div class="mesa-header">🪑 MESA ${mesaBuscada}</div>`;
-     }
-
-     resultado.forEach(inv => {
-       div.innerHTML += `
-         <div class="result-item">
-           <div class="result-name">${inv.nombre}</div>
-           <div class="mesa-badge">Mesa ${inv.mesa}</div>
-         </div>
-       `;
-     });
-
-     div.innerHTML += `<div class="count">Resultados encontrados: ${resultado.length}</div>`;
    }
  </script>
 </body>
