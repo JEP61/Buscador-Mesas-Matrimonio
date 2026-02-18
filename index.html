@@ -51,12 +51,12 @@
      -webkit-backdrop-filter: blur(10px);
 
      border-radius: 22px;
-     padding: 22px;
+     padding: 20px;
 
      box-shadow: 0 10px 26px rgba(0,0,0,0.28);
      text-align: center;
 
-     max-height: 90dvh;
+     max-height: 92dvh;
      overflow-y: auto;
    }
 
@@ -96,7 +96,7 @@
      padding: 16px;
      border-radius: 14px;
      border: 2px solid rgba(0,0,0,0.12);
-     margin-top: 18px;
+     margin-top: 16px;
      outline: none;
      font-weight: 800;
      text-align: center;
@@ -106,7 +106,7 @@
    .buttons {
      display: flex;
      gap: 14px;
-     margin-top: 16px;
+     margin-top: 14px;
      justify-content: center;
      flex-wrap: wrap;
    }
@@ -142,18 +142,6 @@
      transform: scale(1.02);
    }
 
-   .estado {
-     margin-top: 16px;
-     font-size: 16px;
-     font-weight: 800;
-     color: #111;
-     background: rgba(255,255,255,0.70);
-     padding: 12px;
-     border-radius: 14px;
-     border: 1px solid rgba(0,0,0,0.15);
-     line-height: 1.4;
-   }
-
    .resultado {
      margin-top: 16px;
      text-align: left;
@@ -166,7 +154,7 @@
      border-radius: 18px;
      border: 1px solid rgba(0,0,0,0.12);
 
-     max-height: 320px;
+     max-height: 420px;
      overflow-y: auto;
    }
 
@@ -240,7 +228,7 @@
    <div class="novios">Florencia Pino & Tomás Godoy 💙</div>
 
    <div class="subtitulo">
-     Ingresa tu apellido o tu número de mesa
+     Ingresa tu apellido o número de mesa y presiona el botón correspondiente
    </div>
 
    <div class="ejemplo">
@@ -252,12 +240,6 @@
    <div class="buttons">
      <button class="btn-apellido" onclick="buscarPorApellido()">🔍 Buscar por Apellido</button>
      <button class="btn-mesa" onclick="buscarPorMesa()">🪑 Buscar por Mesa</button>
-   </div>
-
-   <div class="estado" id="estado">
-     Escribe un apellido o un número de mesa y presiona el botón correspondiente.
-     <br><br>
-     Si no aparece, prueba con tu segundo apellido 😊
    </div>
 
    <div class="resultado" id="resultado"></div>
@@ -289,13 +271,9 @@
            nombre: partes[1]?.trim()
          };
        });
-
-       document.getElementById("estado").innerHTML =
-         "✅ Invitados cargados: " + invitados.length +
-         "<br><br>Escribe un apellido o un número de mesa y presiona el botón correspondiente.";
      })
      .catch(() => {
-       document.getElementById("estado").innerText =
+       document.getElementById("resultado").innerText =
          "❌ Error cargando invitados.csv. Revisa que esté subido en GitHub.";
      });
 
@@ -311,9 +289,7 @@
 
      const resultados = invitados.filter(inv => {
        const nombreNorm = normalizarTexto(inv.nombre);
-
        const palabras = nombreNorm.split(" ");
-
        return palabras.includes(texto);
      });
 
