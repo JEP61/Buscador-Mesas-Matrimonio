@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscador de Mesas</title>
+</head>
+<body>
+    <h2>Buscar Invitados</h2>
+    <input type="text" id="busqueda" placeholder="Ingrese apellido o mesa">
+    <button onclick="buscarPorApellido()">Buscar por Apellido</button>
+    <button onclick="buscarPorMesa()">Buscar por Mesa</button>
+    <div id="resultado"></div>
+
+    <script>
+        let datos = [];
+
+        fetch('invitados.csv')
+            .then(response => response.text())
+            .then(text => {
+                const lineas = text.split('\n');
+                lineas.forEach(linea => {
+                    const [num, nombre, mesa] = linea.split(',');
+                    datos.push({ num, nombre, mesa });
+                });
+            });
+
+        function buscarPorApellido() {
+            const query = document.getElementById('busqueda').value.toLowerCase();
+            const resultado = datos.filter(inv => inv.nombre.toLowerCase().includes(query));
+            mostrarResultado(resultado);
+        }
+
+        function buscarPorMesa() {
+            const query = document.getElementById('busqueda').value.trim();
+            const resultado = datos.filter(inv => inv.mesa === query);
+            mostrarResultado(resultado);
+        }
+
+        function mostrarResultado(resultado) {
+            const div = document.getElementById('resultado');
+            if (resultado.length) {
+                div.innerHTML = resultado.map(inv => `${inv.nombre} - Mesa: ${inv.mesa}`).join('<br>');
+            } else {
+                div.innerHTML = 'No se encontraron resultados.';
+            }
+        }
+    </script>
+</body>
+</html>
