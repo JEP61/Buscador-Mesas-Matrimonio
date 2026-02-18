@@ -6,29 +6,33 @@
  <title>Buscador de Mesas</title>
 
  <style>
+   * {
+     box-sizing: border-box;
+   }
+
    body {
      margin: 0;
      font-family: Arial, sans-serif;
 
-     min-height: 100vh;
-     height: 100svh; /* para iPhone Safari moderno */
+     height: 100vh;
+     height: 100dvh;
+
      display: flex;
      justify-content: center;
      align-items: center;
-
-     padding: 14px;
-     box-sizing: border-box;
 
      background-image: url("fondo.jpg");
      background-size: cover;
      background-position: center;
      background-repeat: no-repeat;
+
      overflow: hidden;
    }
 
    .overlay {
      position: fixed;
-     top: 0; left: 0;
+     top: 0;
+     left: 0;
      width: 100%;
      height: 100%;
      background: rgba(0,0,0,0.28);
@@ -39,7 +43,7 @@
      position: relative;
      z-index: 1;
 
-     width: 100%;
+     width: 92%;
      max-width: 560px;
 
      background: rgba(255,255,255,0.82);
@@ -52,7 +56,7 @@
      box-shadow: 0 10px 26px rgba(0,0,0,0.28);
      text-align: center;
 
-     max-height: calc(100svh - 28px);
+     max-height: 90dvh;
      overflow-y: auto;
    }
 
@@ -64,25 +68,26 @@
      letter-spacing: 0.5px;
    }
 
-   .subtitulo {
+   .novios {
      margin-top: 10px;
      font-size: 18px;
-     font-weight: 700;
+     font-weight: 900;
+     color: #133d66;
+   }
+
+   .subtitulo {
+     margin-top: 14px;
+     font-size: 18px;
+     font-weight: 800;
      color: #333;
+     line-height: 1.35;
    }
 
    .ejemplo {
      font-size: 16px;
-     margin-top: 6px;
+     margin-top: 8px;
      color: #444;
-     font-weight: 600;
-   }
-
-   .novios {
-     margin-top: 12px;
-     font-size: 18px;
-     font-weight: 900;
-     color: #0d4a9c;
+     font-weight: 700;
    }
 
    input {
@@ -91,8 +96,7 @@
      padding: 16px;
      border-radius: 14px;
      border: 2px solid rgba(0,0,0,0.12);
-     margin-top: 16px;
-     box-sizing: border-box;
+     margin-top: 18px;
      outline: none;
      font-weight: 800;
      text-align: center;
@@ -120,12 +124,12 @@
      box-shadow: 0 6px 14px rgba(0,0,0,0.18);
    }
 
-   .btn-nombre {
+   .btn-apellido {
      background: linear-gradient(180deg, #0d4a9c, #0b3e83);
      color: white;
    }
 
-   .btn-nombre:hover {
+   .btn-apellido:hover {
      transform: scale(1.02);
    }
 
@@ -138,12 +142,12 @@
      transform: scale(1.02);
    }
 
-   .hint {
-     margin-top: 14px;
+   .estado {
+     margin-top: 16px;
      font-size: 16px;
-     font-weight: 700;
+     font-weight: 800;
      color: #111;
-     background: rgba(255,255,255,0.65);
+     background: rgba(255,255,255,0.70);
      padding: 12px;
      border-radius: 14px;
      border: 1px solid rgba(0,0,0,0.15);
@@ -173,17 +177,15 @@
      gap: 10px;
 
      padding: 12px 10px;
-     border-bottom: 1px solid rgba(0,0,0,0.12);
      font-size: 20px;
      font-weight: 900;
 
-     background: rgba(13,74,156,0.08);
+     background: rgba(13,74,156,0.12);
      border-radius: 12px;
      margin-bottom: 10px;
    }
 
    .persona:last-child {
-     border-bottom: none;
      margin-bottom: 0;
    }
 
@@ -212,7 +214,7 @@
 
    .footer {
      margin-top: 12px;
-     font-size: 16px;
+     font-size: 15px;
      font-weight: 800;
      color: #222;
      text-align: center;
@@ -221,12 +223,11 @@
 
    @media (max-width: 500px) {
      h1 { font-size: 30px; }
-     .subtitulo { font-size: 17px; }
-     .novios { font-size: 17px; }
+     .novios { font-size: 16px; }
      input { font-size: 20px; }
      button { font-size: 18px; }
      .persona { font-size: 18px; }
-     .mesaTag { font-size: 15px; }
+     .mesaTag { font-size: 14px; }
    }
  </style>
 </head>
@@ -236,114 +237,143 @@
 
  <div class="card">
    <h1>🌿 Buscador de Mesas</h1>
-
-   <div class="subtitulo">Ingresa tu apellido o tu número de mesa</div>
-   <div class="ejemplo">Ejemplo: González o 12</div>
-
    <div class="novios">Florencia Pino & Tomás Godoy 💙</div>
+
+   <div class="subtitulo">
+     Ingresa tu apellido o tu número de mesa
+   </div>
+
+   <div class="ejemplo">
+     Ejemplo: González o 12
+   </div>
 
    <input id="busqueda" type="text" placeholder="Escribe aquí..." autocomplete="off">
 
    <div class="buttons">
-     <button class="btn-nombre" onclick="buscarPorApellido()">🔍 Buscar por Nombre</button>
+     <button class="btn-apellido" onclick="buscarPorApellido()">🔍 Buscar por Apellido</button>
      <button class="btn-mesa" onclick="buscarPorMesa()">🪑 Buscar por Mesa</button>
    </div>
 
-   <div class="hint" id="estado">
-     ⏳ Cargando invitados...
+   <div class="estado" id="estado">
+     Escribe un apellido o un número de mesa y presiona el botón correspondiente.
+     <br><br>
+     Si no aparece, prueba con tu segundo apellido 😊
    </div>
 
-   <div class="resultado" id="resultado" style="display:none;"></div>
-   <div class="footer" id="contador"></div>
+   <div class="resultado" id="resultado"></div>
+
+   <div class="footer">
+     Flo & Tomás 💙
+   </div>
  </div>
 
  <script>
-   let datos = [];
+   let invitados = [];
 
    function normalizarTexto(texto) {
      return texto
        .toLowerCase()
        .normalize("NFD")
-       .replace(/[\u0300-\u036f]/g, "");
+       .replace(/[\u0300-\u036f]/g, "")
+       .trim();
    }
 
    fetch("invitados.csv")
-     .then(response => response.text())
-     .then(texto => {
-       const lineas = texto.trim().split("\n");
-
-       for (let i = 1; i < lineas.length; i++) {
-         const partes = lineas[i].split(",");
-         if (partes.length >= 3) {
-           const num = partes[0].trim();
-           const nombre = partes[1].trim();
-           const mesa = partes[2].trim();
-           datos.push({ num, nombre, mesa });
-         }
-       }
+     .then(res => res.text())
+     .then(data => {
+       const lineas = data.split("\n").filter(l => l.trim() !== "");
+       invitados = lineas.map(linea => {
+         const partes = linea.split(",");
+         return {
+           mesa: partes[0]?.trim(),
+           nombre: partes[1]?.trim()
+         };
+       });
 
        document.getElementById("estado").innerHTML =
-         "✅ Listo. Ahora puedes buscar por apellido o por número de mesa.<br><b>Invitados cargados:</b> " + datos.length;
+         "✅ Invitados cargados: " + invitados.length +
+         "<br><br>Escribe un apellido o un número de mesa y presiona el botón correspondiente.";
      })
-     .catch(error => {
-       document.getElementById("estado").innerText = "❌ Error cargando invitados.csv";
-       console.error(error);
+     .catch(() => {
+       document.getElementById("estado").innerText =
+         "❌ Error cargando invitados.csv. Revisa que esté subido en GitHub.";
      });
 
    function limpiarResultado() {
      document.getElementById("resultado").innerHTML = "";
-     document.getElementById("contador").innerHTML = "";
    }
 
-   function mostrarResultado(lista, mesaBuscada = null) {
-     const div = document.getElementById("resultado");
-     div.style.display = "block";
+   function buscarPorApellido() {
      limpiarResultado();
 
-     if (lista.length === 0) {
-       div.innerHTML = "❌ No se encontraron resultados.";
+     const texto = normalizarTexto(document.getElementById("busqueda").value);
+     if (!texto) return;
+
+     const resultados = invitados.filter(inv => {
+       const nombreNorm = normalizarTexto(inv.nombre);
+
+       const palabras = nombreNorm.split(" ");
+
+       return palabras.includes(texto);
+     });
+
+     mostrarResultadosNombre(resultados);
+   }
+
+   function buscarPorMesa() {
+     limpiarResultado();
+
+     const texto = normalizarTexto(document.getElementById("busqueda").value);
+     if (!texto) return;
+
+     const resultados = invitados.filter(inv => normalizarTexto(inv.mesa) === texto);
+
+     mostrarResultadosMesa(resultados, texto);
+   }
+
+   function mostrarResultadosNombre(resultados) {
+     const cont = document.getElementById("resultado");
+
+     if (resultados.length === 0) {
+       cont.innerHTML = "<b>No se encontraron resultados.</b>";
        return;
      }
 
-     if (mesaBuscada !== null) {
-       div.innerHTML += `<div class="mesaTitulo">🪑 MESA ${mesaBuscada}</div>`;
-     }
-
-     lista.forEach(persona => {
-       div.innerHTML += `
+     resultados.forEach(r => {
+       cont.innerHTML += `
          <div class="persona">
-           <span>${persona.nombre}</span>
-           <span class="mesaTag">Mesa ${persona.mesa}</span>
+           <div>${r.nombre}</div>
+           <div class="mesaTag">Mesa ${r.mesa}</div>
          </div>
        `;
      });
 
-     document.getElementById("contador").innerHTML =
-       `<b>Resultados encontrados:</b> ${lista.length}<br>
-       Si no encuentras tu nombre, prueba con tu primer apellido 😊`;
+     cont.innerHTML += `<div style="text-align:center;margin-top:12px;font-weight:900;color:#133d66;">
+       Resultados encontrados: ${resultados.length}
+     </div>`;
    }
 
-   function buscarPorApellido() {
-     const queryOriginal = document.getElementById("busqueda").value.trim();
-     if (queryOriginal.length === 0) return;
+   function mostrarResultadosMesa(resultados, mesa) {
+     const cont = document.getElementById("resultado");
 
-     const query = normalizarTexto(queryOriginal);
+     if (resultados.length === 0) {
+       cont.innerHTML = "<b>No se encontraron resultados para esa mesa.</b>";
+       return;
+     }
 
-     const resultado = datos.filter(inv => {
-       const palabras = normalizarTexto(inv.nombre).split(" ");
-       return palabras.includes(query);
+     cont.innerHTML = `<div class="mesaTitulo">🪑 MESA ${mesa}</div>`;
+
+     resultados.forEach(r => {
+       cont.innerHTML += `
+         <div class="persona">
+           <div>${r.nombre}</div>
+         </div>
+       `;
      });
 
-     mostrarResultado(resultado, null);
-   }
-
-   function buscarPorMesa() {
-     const query = document.getElementById("busqueda").value.trim();
-     if (query.length === 0) return;
-
-     const resultado = datos.filter(inv => inv.mesa === query);
-
-     mostrarResultado(resultado, query);
+     cont.innerHTML += `<div style="text-align:center;margin-top:12px;font-weight:900;color:#133d66;">
+       Invitados encontrados: ${resultados.length}
+     </div>`;
    }
  </script>
 </body>
