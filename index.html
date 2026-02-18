@@ -39,8 +39,8 @@
         }
 
         function buscarPorMesa() {
-            const query = document.getElementById('busqueda').value.trim();
-            const resultado = datos.filter(inv => inv.mesa === query);
+            const query = parseInt(document.getElementById('busqueda').value.trim());
+            const resultado = datos.filter(inv => parseInt(inv.mesa) === query);
             mostrarResultado(resultado);
         }
 
