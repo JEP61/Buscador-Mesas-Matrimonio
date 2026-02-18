@@ -1,356 +1,369 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Buscador de Mesas</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Buscador de Mesas</title>
 
- <style>
-   * {
-     box-sizing: border-box;
-   }
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("fondo.jpg") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-   body {
-     margin: 0;
-     font-family: Arial, sans-serif;
+    .contenedor {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 18px;
+      padding: 22px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0px 8px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(6px);
+    }
 
-     height: 100vh;
-     height: 100dvh;
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      font-weight: 900;
+      color: #1e4d7b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.1;
+    }
 
-     display: flex;
-     justify-content: center;
-     align-items: center;
+    .novios {
+      margin-top: 8px;
+      margin-bottom: 18px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e4d7b;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
 
-     background-image: url("fondo.jpg");
-     background-size: cover;
-     background-position: center;
-     background-repeat: no-repeat;
+    .instruccion {
+      font-size: 20px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
 
-     overflow: hidden;
-   }
+    .ejemplo {
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
 
-   .overlay {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     background: rgba(0,0,0,0.28);
-     z-index: 0;
-   }
+    input {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: 2px solid #ccc;
+      font-size: 24px;
+      text-align: center;
+      font-weight: 800;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      outline: none;
+    }
 
-   .card {
-     position: relative;
-     z-index: 1;
+    input:focus {
+      border-color: #1e4d7b;
+      box-shadow: 0px 0px 8px rgba(30, 77, 123, 0.4);
+    }
 
-     width: 92%;
-     max-width: 560px;
+    button {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: 0.2s ease-in-out;
+    }
 
-     background: rgba(255,255,255,0.82);
-     backdrop-filter: blur(10px);
-     -webkit-backdrop-filter: blur(10px);
+    .btnNombre {
+      background: linear-gradient(180deg, #1e5fa5, #17487c);
+      color: white;
+    }
 
-     border-radius: 22px;
-     padding: 20px;
+    .btnNombre:hover {
+      transform: scale(1.02);
+      filter: brightness(1.05);
+    }
 
-     box-shadow: 0 10px 26px rgba(0,0,0,0.28);
-     text-align: center;
+    .btnMesa {
+      background: linear-gradient(180deg, #f2b300, #d79200);
+      color: #222;
+    }
 
-     max-height: 92dvh;
-     overflow-y: auto;
-   }
+    .btnMesa:hover {
+      transform: scale(1.02);
+      filter: brightness(1.05);
+    }
 
-   h1 {
-     margin: 0;
-     font-size: 34px;
-     color: #133d66;
-     font-weight: 900;
-     letter-spacing: 0.5px;
-   }
+    .resultados {
+      margin-top: 15px;
+      text-align: left;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
 
-   .novios {
-     margin-top: 10px;
-     font-size: 18px;
-     font-weight: 900;
-     color: #133d66;
-   }
+    .resultadoItem {
+      background: rgba(30, 77, 123, 0.10);
+      border-left: 6px solid #1e4d7b;
+      border-radius: 12px;
+      padding: 12px 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #222;
+    }
 
-   .subtitulo {
-     margin-top: 14px;
-     font-size: 18px;
-     font-weight: 800;
-     color: #333;
-     line-height: 1.35;
-   }
+    .mesaBadge {
+      background: linear-gradient(180deg, #f2b300, #d79200);
+      color: #1a1a1a;
+      font-weight: 900;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 16px;
+      white-space: nowrap;
+      box-shadow: 0px 3px 8px rgba(0,0,0,0.15);
+    }
 
-   .ejemplo {
-     font-size: 16px;
-     margin-top: 8px;
-     color: #444;
-     font-weight: 700;
-   }
+    .mesaTitulo {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 900;
+      color: #1e4d7b;
+      background: rgba(255,255,255,0.75);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 14px;
+      border: 2px solid rgba(30, 77, 123, 0.25);
+    }
 
-   input {
-     width: 100%;
-     font-size: 22px;
-     padding: 16px;
-     border-radius: 14px;
-     border: 2px solid rgba(0,0,0,0.12);
-     margin-top: 16px;
-     outline: none;
-     font-weight: 800;
-     text-align: center;
-     background: rgba(255,255,255,0.95);
-   }
+    .contador {
+      text-align: center;
+      font-weight: 900;
+      font-size: 18px;
+      margin-top: 12px;
+      color: #1e4d7b;
+    }
 
-   .buttons {
-     display: flex;
-     gap: 14px;
-     margin-top: 14px;
-     justify-content: center;
-     flex-wrap: wrap;
-   }
+    .mensajeError {
+      text-align: center;
+      font-weight: 800;
+      font-size: 17px;
+      margin-top: 12px;
+      color: #b00020;
+    }
 
-   button {
-     flex: 1;
-     min-width: 230px;
-     padding: 16px;
-     font-size: 20px;
-     font-weight: 900;
-     border: none;
-     border-radius: 16px;
-     cursor: pointer;
-     transition: 0.2s;
-     box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-   }
+    .resultados::-webkit-scrollbar {
+      width: 8px;
+    }
 
-   .btn-apellido {
-     background: linear-gradient(180deg, #0d4a9c, #0b3e83);
-     color: white;
-   }
+    .resultados::-webkit-scrollbar-thumb {
+      background: rgba(30, 77, 123, 0.4);
+      border-radius: 10px;
+    }
 
-   .btn-apellido:hover {
-     transform: scale(1.02);
-   }
-
-   .btn-mesa {
-     background: linear-gradient(180deg, #f4b400, #e6a600);
-     color: #1d1d1d;
-   }
-
-   .btn-mesa:hover {
-     transform: scale(1.02);
-   }
-
-   .resultado {
-     margin-top: 16px;
-     text-align: left;
-     font-size: 20px;
-     font-weight: 800;
-     color: #111;
-
-     background: rgba(255,255,255,0.78);
-     padding: 14px;
-     border-radius: 18px;
-     border: 1px solid rgba(0,0,0,0.12);
-
-     max-height: 420px;
-     overflow-y: auto;
-   }
-
-   .persona {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     gap: 10px;
-
-     padding: 12px 10px;
-     font-size: 20px;
-     font-weight: 900;
-
-     background: rgba(13,74,156,0.12);
-     border-radius: 12px;
-     margin-bottom: 10px;
-   }
-
-   .persona:last-child {
-     margin-bottom: 0;
-   }
-
-   .mesaTag {
-     background: linear-gradient(180deg, #133d66, #0b2c4f);
-     color: white;
-     padding: 8px 14px;
-     border-radius: 14px;
-     font-size: 16px;
-     font-weight: 900;
-     white-space: nowrap;
-     box-shadow: 0 4px 10px rgba(0,0,0,0.18);
-   }
-
-   .mesaTitulo {
-     background: rgba(255,255,255,0.9);
-     border: 2px solid rgba(19,61,102,0.25);
-     border-radius: 18px;
-     padding: 12px;
-     font-size: 24px;
-     font-weight: 900;
-     text-align: center;
-     margin-bottom: 14px;
-     color: #133d66;
-   }
-
-   .footer {
-     margin-top: 12px;
-     font-size: 15px;
-     font-weight: 800;
-     color: #222;
-     text-align: center;
-     line-height: 1.5;
-   }
-
-   @media (max-width: 500px) {
-     h1 { font-size: 30px; }
-     .novios { font-size: 16px; }
-     input { font-size: 20px; }
-     button { font-size: 18px; }
-     .persona { font-size: 18px; }
-     .mesaTag { font-size: 14px; }
-   }
- </style>
+    @media (max-height: 700px) {
+      .resultados {
+        max-height: 220px;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      .instruccion {
+        font-size: 18px;
+      }
+      input {
+        font-size: 20px;
+      }
+      button {
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
- <div class="overlay"></div>
 
- <div class="card">
-   <h1>🌿 Buscador de Mesas</h1>
-   <div class="novios">Florencia Pino & Tomás Godoy 💙</div>
+  <div class="contenedor">
+    <h1>🌿 Buscador de Mesas</h1>
 
-   <div class="subtitulo">
-     Ingresa tu apellido o número de mesa y presiona el botón correspondiente
-   </div>
+    <div class="novios">Florencia Pino & Tomás Godoy 💙</div>
 
-   <div class="ejemplo">
-     Ejemplo: González o 12
-   </div>
+    <div class="instruccion">
+      Ingresa tu apellido o número de mesa y presiona el botón correspondiente
+    </div>
 
-   <input id="busqueda" type="text" placeholder="Escribe aquí..." autocomplete="off">
+    <div class="ejemplo">
+      Ejemplo: González o 12
+    </div>
 
-   <div class="buttons">
-     <button class="btn-apellido" onclick="buscarPorApellido()">🔍 Buscar por Apellido</button>
-     <button class="btn-mesa" onclick="buscarPorMesa()">🪑 Buscar por Mesa</button>
-   </div>
+    <input type="text" id="busqueda" placeholder="Escribe aquí..." autocomplete="off" />
 
-   <div class="resultado" id="resultado"></div>
+    <button class="btnNombre" onclick="buscarPorApellido()">🔍 Buscar por Apellido</button>
+    <button class="btnMesa" onclick="buscarPorMesa()">🪑 Buscar por Mesa</button>
 
-   <div class="footer">
-     Flo & Tomás 💙
-   </div>
- </div>
+    <div id="resultados" class="resultados"></div>
 
- <script>
-   let invitados = [];
+    <div id="contador" class="contador"></div>
+    <div id="mensajeError" class="mensajeError"></div>
+  </div>
 
-   function normalizarTexto(texto) {
-     return texto
-       .toLowerCase()
-       .normalize("NFD")
-       .replace(/[\u0300-\u036f]/g, "")
-       .trim();
-   }
+  <script>
+    let invitados = [];
 
-   fetch("invitados.csv")
-     .then(res => res.text())
-     .then(data => {
-       const lineas = data.split("\n").filter(l => l.trim() !== "");
-       invitados = lineas.map(linea => {
-         const partes = linea.split(",");
-         return {
-           mesa: partes[0]?.trim(),
-           nombre: partes[1]?.trim()
-         };
-       });
-     })
-     .catch(() => {
-       document.getElementById("resultado").innerText =
-         "❌ Error cargando invitados.csv. Revisa que esté subido en GitHub.";
-     });
+    // Quita tildes, pasa a minúsculas, elimina espacios dobles
+    function normalizarTexto(texto) {
+      return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
 
-   function limpiarResultado() {
-     document.getElementById("resultado").innerHTML = "";
-   }
+    async function cargarCSV() {
+      try {
+        const response = await fetch("invitados.csv");
+        const data = await response.text();
 
-   function buscarPorApellido() {
-     limpiarResultado();
+        const lineas = data.split("\n").map(l => l.trim()).filter(l => l.length > 0);
 
-     const texto = normalizarTexto(document.getElementById("busqueda").value);
-     if (!texto) return;
+        // Detectar encabezados
+        const encabezados = lineas[0].split(",").map(e => e.trim().toLowerCase());
 
-     const resultados = invitados.filter(inv => {
-       const nombreNorm = normalizarTexto(inv.nombre);
-       const palabras = nombreNorm.split(" ");
-       return palabras.includes(texto);
-     });
+        const idxNombre = encabezados.indexOf("nombre");
+        const idxMesa = encabezados.indexOf("mesa");
 
-     mostrarResultadosNombre(resultados);
-   }
+        invitados = lineas.slice(1).map(linea => {
+          const partes = linea.split(",").map(p => p.trim());
+          return {
+            nombre: partes[idxNombre] || "",
+            mesa: partes[idxMesa] || ""
+          };
+        });
 
-   function buscarPorMesa() {
-     limpiarResultado();
+      } catch (error) {
+        console.error("Error cargando CSV:", error);
+        document.getElementById("mensajeError").innerText =
+          "⚠️ Error al cargar la lista de invitados. Revisa el archivo invitados.csv.";
+      }
+    }
 
-     const texto = normalizarTexto(document.getElementById("busqueda").value);
-     if (!texto) return;
+    function limpiarPantalla() {
+      document.getElementById("resultados").innerHTML = "";
+      document.getElementById("contador").innerText = "";
+      document.getElementById("mensajeError").innerText = "";
+    }
 
-     const resultados = invitados.filter(inv => normalizarTexto(inv.mesa) === texto);
+    function buscarPorApellido() {
+      limpiarPantalla();
 
-     mostrarResultadosMesa(resultados, texto);
-   }
+      const texto = document.getElementById("busqueda").value;
+      const busqueda = normalizarTexto(texto);
 
-   function mostrarResultadosNombre(resultados) {
-     const cont = document.getElementById("resultado");
+      if (!busqueda) {
+        document.getElementById("mensajeError").innerText =
+          "⚠️ Escribe un apellido antes de buscar.";
+        return;
+      }
 
-     if (resultados.length === 0) {
-       cont.innerHTML = "<b>No se encontraron resultados.</b>";
-       return;
-     }
+      const resultados = invitados.filter(inv => {
+        const nombreNormalizado = normalizarTexto(inv.nombre);
 
-     resultados.forEach(r => {
-       cont.innerHTML += `
-         <div class="persona">
-           <div>${r.nombre}</div>
-           <div class="mesaTag">Mesa ${r.mesa}</div>
-         </div>
-       `;
-     });
+        // dividir palabras del nombre completo
+        const palabras = nombreNormalizado.split(" ");
 
-     cont.innerHTML += `<div style="text-align:center;margin-top:12px;font-weight:900;color:#133d66;">
-       Resultados encontrados: ${resultados.length}
-     </div>`;
-   }
+        // buscar coincidencia EXACTA por palabra (evita pino dentro de espinoza)
+        return palabras.includes(busqueda);
+      });
 
-   function mostrarResultadosMesa(resultados, mesa) {
-     const cont = document.getElementById("resultado");
+      mostrarResultados(resultados, false);
+    }
 
-     if (resultados.length === 0) {
-       cont.innerHTML = "<b>No se encontraron resultados para esa mesa.</b>";
-       return;
-     }
+    function buscarPorMesa() {
+      limpiarPantalla();
 
-     cont.innerHTML = `<div class="mesaTitulo">🪑 MESA ${mesa}</div>`;
+      const texto = document.getElementById("busqueda").value.trim();
 
-     resultados.forEach(r => {
-       cont.innerHTML += `
-         <div class="persona">
-           <div>${r.nombre}</div>
-         </div>
-       `;
-     });
+      if (!texto || isNaN(texto)) {
+        document.getElementById("mensajeError").innerText =
+          "⚠️ Ingresa un número de mesa válido.";
+        return;
+      }
 
-     cont.innerHTML += `<div style="text-align:center;margin-top:12px;font-weight:900;color:#133d66;">
-       Invitados encontrados: ${resultados.length}
-     </div>`;
-   }
- </script>
+      const mesaBuscada = texto;
+
+      // IMPORTANTE: filter() para traer TODOS los invitados de la mesa
+      const resultados = invitados.filter(inv => inv.mesa.trim() === mesaBuscada);
+
+      mostrarResultados(resultados, true, mesaBuscada);
+    }
+
+    function mostrarResultados(resultados, esMesa, mesaBuscada = "") {
+      const divResultados = document.getElementById("resultados");
+      const divContador = document.getElementById("contador");
+
+      if (resultados.length === 0) {
+        document.getElementById("mensajeError").innerText =
+          "❌ No se encontraron resultados. Prueba con otro apellido o mesa.";
+        return;
+      }
+
+      if (esMesa) {
+        divResultados.innerHTML += `<div class="mesaTitulo">🪑 MESA ${mesaBuscada}</div>`;
+      }
+
+      resultados.forEach(inv => {
+        const nombre = inv.nombre;
+        const mesa = inv.mesa;
+
+        divResultados.innerHTML += `
+          <div class="resultadoItem">
+            <div>${nombre}</div>
+            <div class="mesaBadge">Mesa ${mesa}</div>
+          </div>
+        `;
+      });
+
+      divContador.innerText = `Invitados encontrados: ${resultados.length}`;
+    }
+
+    // Cargar automáticamente al abrir la página
+    cargarCSV();
+
+    // Enter busca por apellido automáticamente
+    document.getElementById("busqueda").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        buscarPorApellido();
+      }
+    });
+  </script>
+
 </body>
 </html>
