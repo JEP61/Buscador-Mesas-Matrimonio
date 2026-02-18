@@ -1,57 +1,303 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Buscador de Mesas</title>
+
+      padding: 18px;
+      box-sizing: border-box;
+
+      /* Fondo */
+      background-image: url("fondo.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Capa de blur y oscurecimiento suave */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+
+      width: 100%;
+      max-width: 680px;
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 22px;
+      padding: 26px 22px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.20);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      color: #133d66;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .hint {
+      margin-top: 8px;
+      margin-bottom: 18px;
+      font-size: 18px;
+      color: #444;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px;
+      font-size: 20px;
+      border-radius: 14px;
+      border: 1px solid #ccc;
+      outline: none;
+      margin-bottom: 18px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      border-color: #2f6fed;
+      box-shadow: 0 0 0 4px rgba(47,111,237,0.18);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    button {
+      flex: 1;
+      min-width: 210px;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-nombre {
+      background: #1f5bd6;
+      color: white;
+    }
+
+    .btn-nombre:hover {
+      background: #1748ab;
+    }
+
+    .btn-mesa {
+      background: #ffb703;
+      color: #1d1d1d;
+    }
+
+    .btn-mesa:hover {
+      background: #e6a600;
+    }
+
+    .resultado {
+      text-align: left;
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.90);
+      max-height: 380px;
+      overflow-y: auto;
+      font-size: 20px;
+      line-height: 1.7;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .linea {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 6px;
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .linea:last-child {
+      border-bottom: none;
+    }
+
+    .nombre-text {
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .mesa-tag {
+      font-weight: 900;
+      background: #133d66;
+      color: white;
+      padding: 7px 12px;
+      border-radius: 14px;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .contador {
+      margin-top: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 28px;
+      }
+      .subtitle {
+        font-size: 18px;
+      }
+      .hint {
+        font-size: 16px;
+      }
+      input {
+        font-size: 18px;
+      }
+      button {
+        font-size: 16px;
+      }
+      .resultado {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h2>Buscar Invitados</h2>
-    <input type="text" id="busqueda" placeholder="Ingrese apellido o mesa">
-    <button onclick="buscarPorApellido()">Buscar por Apellido</button>
-    <button onclick="buscarPorMesa()">Buscar por Mesa</button>
-    <div id="resultado"></div>
 
-    <script>
-        let datos = [];
+  <div class="overlay"></div>
 
-        fetch('invitados.csv')
-            .then(response => response.text())
-            .then(text => {
-                const lineas = text.split(/\r?\n/);
-                lineas.slice(1).forEach(linea => { // salta encabezado
-                  if (!linea.trim()) return;       // salta líneas vacías
-                
-                  const partes = linea.split(',');
-                  const num = (partes[0] || '').trim();
-                  const nombre = (partes[1] || '').trim();
-                  const mesa = (partes[2] || '').trim();
-                
-                  if (num && nombre && mesa) {
-                    datos.push({ num, nombre, mesa });
-                  }
-                });
-            });
+  <div class="card">
+    <h1>🌿 Buscador de Mesas</h1>
 
-        function buscarPorApellido() {
-            const query = document.getElementById('busqueda').value.toLowerCase();
-            const resultado = datos.filter(inv => inv.nombre.toLowerCase().includes(query));
-            mostrarResultado(resultado);
-        }
+    <div class="subtitle">
+      Ingresa tu apellido o tu número de mesa
+    </div>
 
-        function buscarPorMesa() {
-            const query = parseInt(document.getElementById('busqueda').value.trim());
-            const resultado = datos.filter(inv => parseInt(inv.mesa) === query);
-            mostrarResultado(resultado);
-        }
+    <div class="hint">
+      Ejemplo: <b>González</b> o <b>12</b>
+    </div>
 
-        function mostrarResultado(resultado) {
-            const div = document.getElementById('resultado');
-            if (resultado.length) {
-                div.innerHTML = resultado.map(inv => `${inv.nombre} - Mesa: ${inv.mesa}`).join('<br>');
-            } else {
-                div.innerHTML = 'No se encontraron resultados.';
-            }
-        }
-    </script>
+    <input type="text" id="busqueda" placeholder="Escribe aquí...">
+
+    <div class="buttons">
+      <button class="btn-nombre" onclick="buscarPorNombre()">🔍 Buscar por Nombre</button>
+      <button class="btn-mesa" onclick="buscarPorMesa()">🪑 Buscar por Mesa</button>
+    </div>
+
+    <div id="resultado" class="resultado">
+      Cargando invitados...
+    </div>
+
+    <div id="contador" class="contador"></div>
+
+    <div class="footer">
+      Si no encuentras tu nombre, prueba con tu primer apellido 😊
+    </div>
+  </div>
+
+  <script>
+    let datos = [];
+
+    fetch('invitados.csv')
+      .then(response => response.text())
+      .then(text => {
+
+        const lineas = text.split(/\r?\n/);
+
+        lineas.slice(1).forEach(linea => {
+          if (!linea.trim()) return;
+
+          const partes = linea.split(',');
+          const num = (partes[0] || '').trim();
+          const nombre = (partes[1] || '').trim();
+          const mesa = (partes[2] || '').trim();
+
+          if (num && nombre && mesa) {
+            datos.push({ num, nombre, mesa });
+          }
+        });
+
+        document.getElementById("resultado").innerHTML =
+          "✅ Listo. Ahora puedes buscar por apellido o por número de mesa.";
+
+        document.getElementById("contador").innerHTML =
+          `Invitados cargados: ${datos.length}`;
+
+      });
+
+    function mostrarResultado(resultado) {
+      const div = document.getElementById('resultado');
+      const contador = document.getElementById('contador');
+
+      if (resultado.length) {
+        div.innerHTML = resultado.map(inv =>
+          `<div class="linea">
+              <div class="nombre-text">${inv.nombre}</div>
+              <div class="mesa-tag">Mesa ${inv.mesa}</div>
+           </div>`
+        ).join('');
+
+        contador.innerHTML = `Resultados encontrados: ${resultado.length}`;
+      } else {
+        div.innerHTML = "❌ No se encontraron resultados.";
+        contador.innerHTML = "";
+      }
+    }
+
+    function buscarPorNombre() {
+      const query = document.getElementById('busqueda').value.toLowerCase().trim();
+
+      if (!query) {
+        document.getElementById("resultado").innerHTML = "⚠️ Escribe un apellido o nombre.";
+        return;
+      }
+
+      const resultado = datos.filter(inv =>
+        inv.nombre.toLowerCase().includes(query)
+      );
+
+      mostrarResultado(resultado);
+    }
+
+    function buscarPorMesa() {
+      const query = parseInt(document.getElementById('busqueda').value.trim());
+
+      if (isNaN(query)) {
+        document.getElementById("resultado").innerHTML = "⚠️ Escribe un número de mesa (ej: 12).";
+        return;
+      }
+
+      const resultado = datos.filter(inv =>
+        parseInt(inv.mesa) === query
+      );
+
+      mostrarResultado(resultado);
+    }
+  </script>
+
 </body>
 </html>
